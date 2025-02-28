@@ -8,7 +8,6 @@ interface DeviceMockupProps {
   padding?: string; 
 }
 import { UserComponent } from "@craftjs/core";
-import { ContainerLayout } from "../element_layout";
 export const DeviceMockup: React.FC<DeviceMockupProps> & UserComponent = ({
   width = "940px",
   height = "700px",
@@ -33,7 +32,8 @@ export const DeviceMockup: React.FC<DeviceMockupProps> & UserComponent = ({
         <Element
           id="device-screen"
           canvas
-          is={ContainerLayout}
+          is="div"
+          className="h-full w-full flex flex-col"
         >
         </Element>
       </div>
