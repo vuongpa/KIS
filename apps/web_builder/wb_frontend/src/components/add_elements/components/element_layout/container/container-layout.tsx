@@ -1,19 +1,11 @@
+import { useEditor, useNode } from "@craftjs/core";
 import React, { useState } from "react";
-import { Element, useNode, useEditor } from "@craftjs/core";
-import { getDefaultContainerProperties, DefaultContainerProperties } from "./container-properties";
-import { ContainerProperties } from "./properties-container-panel";
 import { DeleteContextMenu } from "../../../delete_context_menu/delete-context-menu";
+import { DefaultContainerProperties, getDefaultContainerProperties } from "./container-properties";
+import { ContainerProperties } from "./properties-container-panel";
 import { ResizeHandles } from "./resizes";
 
-interface ContainerProps extends Partial<DefaultContainerProperties> {
-  children?: React.ReactNode;
-}
-
-interface CraftComponent extends React.FC<ContainerProps> {
-  craft?: any;
-}
-
-export const ContainerLayout: CraftComponent = (props) => {
+export const ContainerLayout = (props: Partial<DefaultContainerProperties>) => {
   const {
     connectors: { connect, drag },
     selected,
@@ -79,9 +71,7 @@ export const ContainerLayout: CraftComponent = (props) => {
         outline: selected ? "2px solid gray" : "none",
       }}
     >
-      <Element id="drop_target" canvas is="div" className="w-full h-full flex flex-col gap-2">
-        {props.children}
-      </Element>
+      {props.children}
       <ResizeHandles nodeId={id} />
       <DeleteContextMenu
         nodeId={id}

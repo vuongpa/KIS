@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface DefaultContainerProperties {
   id: string;
   backgroundColor: string;
@@ -34,7 +36,8 @@ export interface DefaultContainerProperties {
   zIndex?: number; 
   display?: "block" | "flex" | "grid" | "inline" | "none"; 
   overflow?: "visible" | "hidden" | "scroll" | "auto";
-  opacity?: number; 
+  opacity?: number;
+  children?: ReactNode;
 }
 
 export const getDefaultContainerProperties = (): DefaultContainerProperties => ({
