@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@kis/wb_api_helloworld/*": [
+        "./*"
+      ],
+    }
+  }
+}

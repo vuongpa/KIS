@@ -1,0 +1,7 @@
+.pageWrapper {
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  @apply flex flex-col;
+}/*# sourceMappingURL=auth-layout.module.css.map */

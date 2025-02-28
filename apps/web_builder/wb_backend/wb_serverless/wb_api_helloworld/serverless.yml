@@ -1,0 +1,16 @@
+service: hello-service
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+plugins:
+  - serverless-offline
+
+functions:
+  hello:
+    handler: dist/handler.handler
+    events:
+      - http:
+          path: api/v1/hello
+          method: get

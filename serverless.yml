@@ -1,0 +1,197 @@
+service: kis-serverless
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: ${opt:stage}
+  memorySize: 512 # Optional
+  timeout: 10   # repository wide Lambda timeout
+  environment:  # repository wide Lambda env variables
+    STAGE: ${self:provider.stage}
+    #  JWT
+    JWT_SECRET: ${env:JWT_SECRET}
+    REFRESH_SECRET: ${env:REFRESH_SECRET}
+    # redis
+    REDIS_HOST: ${env:REDIS_HOST}
+    REDIS_PORT: ${env:REDIS_PORT}
+    # MySQL
+    DB_HOST: ${env:DB_HOST}
+    DB_USER: ${env:DB_USER}
+    DB_PASSWORD: ${env:DB_PASSWORD}
+    DB_NAME: ${env:DB_NAME}
+    DB_PORT: ${env:DB_PORT}
+    
+plugins:
+- serverless-offline # used for local execution
+
+custom:
+  serverless-offline:
+    httpPort: ${env:PORT}
+
+functions:
+  # hello:
+  #   handler: apps/apis/api_hello/src/handler.hello
+  #   events:
+  #     - http:
+  #         path: hello
+  #         method: get
+  #         cors: true
+  #   environment:
+  #     ENV_VAR_1: ${env:ENV_VAR_1}
+
+  login:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_login/src/handler.start
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+      - http:
+          path: refresh
+          method: post
+          cors: true
+
+  register:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_register/src/handler.register
+    events:
+      - http:
+          path: register
+          method: post
+          cors: true
+
+  verify-token:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_verify_token/src/handler.run
+    events:
+      - http:
+          path: verify-token
+          method: post
+          cors: true
+
+  logout:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_logout/src/handler.logout
+    events:
+      - http:
+          path: logout
+          method: post
+          cors: true
+
+  create-new-project:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_create_new_project/src/handler.createProject
+    events:
+      - http:
+          path: create-new-project
+          method: post
+          cors: true
+
+  get-users:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_get_users/src/handler.getUser
+    events:
+      - http:
+          path: profile/{userId}
+          method: get
+          cors: true
+
+  get-projects:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_project_list/src/handler.projects
+    events:
+      - http:
+          path: projects
+          method: get
+          cors: true
+          
+  get-project-detail:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_get_project_detail/src/handler.getProjectDetails
+    events:
+      - http:
+          path: project-detail/{projectId}
+          method: get
+          cors: true
+
+  update-project:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_update_project/src/handler.updateProject
+    events:
+      - http:
+          path: project-detail/{projectId}
+          method: put
+          cors: true
+
+  update-user:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_update_user/src/handler.updateUser
+    events:
+      - http:
+          path: profile/{userId}
+          method: put
+          cors: true
+
+
+  delete-project:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_delete_project/src/handler.deleteProject
+    events:
+      - http:
+          path: projects/{projectId}
+          method: delete
+          cors: true
+
+  duplicate-project:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_duplicate_project/src/handler.duplicateProject
+    events:
+      - http:
+          path: projects/{projectId}/duplicate
+          method: post
+          cors: true
+  #C
+  create-new-page:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_create_new_page/src/handler.createPage
+    events:
+      - http:
+          path: projects/{alias}/create-new-page
+          method: post
+          cors: true 
+  #R
+  get-pages:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_get_pages/src/handler.getPages
+    events:
+      - http:
+          path: projects/{alias}
+          method: get
+          cors: true
+  #U
+  update-page:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_update_page/src/handler.updatePage
+    events:
+      - http:
+          path: projects/{alias}/{urlAlias}/update
+          method: put
+          cors: true
+  #D
+  delete-page:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_delete_page/src/handler.deletePage
+    events:
+      - http:
+          path: projects/{alias}/{urlAlias}
+          method: delete
+          cors: true 
+
+  save-layout:
+    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_save_layout/src/handler.getLayouts
+    events:
+      - http:
+          path: save-layout
+          method: get
+          cors: true
+#   move-project:
+#     handler: apps/web_builder/wb_backend/wb_serverless/wb_api_project_context_menu/src/handler.moveProject
+#     events:
+#       - http:
+#           path: move
+#           method: post
+#           cors: true
+
+#   publish-project:
+#     handler: apps/web_builder/wb_backend/wb_serverless/wb_api_project_context_menu/src/handler.publishProject
+#     events:
+#       - http:
+#           path: publish
+#           method: post
+#           cors: true

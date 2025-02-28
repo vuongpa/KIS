@@ -1,0 +1,22 @@
+{
+  "name": "@kis/project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "clean": "npx rimraf dist out",
+    "build": "tsc --build",
+    "clean-then-build": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@kis/common": "^1.0.0",
+    "@kis/wb-data": "^1.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "redis": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "serverless-offline": "^14.4.0"
+  }
+}

@@ -1,0 +1,18 @@
+:root {
+  --side-bar--width: 200px;
+  --side-bar--bg: #333;
+  --search-box--width: 275px;
+}
+
+/* Sidebar width for mobile */
+@media (max-width: 768px) {
+  :root {
+    --side-bar--width: 60px;
+  }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html, body {
+  height: 100%;
+}/*# sourceMappingURL=global.css.map */

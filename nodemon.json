@@ -1,0 +1,12 @@
+{
+  "watch": [
+    "apps/wed_builder/**/*.ts",
+    "apps/wed_builder/**/*.json"
+  ],
+  "ext": "ts,json",
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "exec": "sls offline --debug --stage dev --reloadHandler",
+  "delay": 1500
+}

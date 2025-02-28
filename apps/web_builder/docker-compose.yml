@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - '8000:8000'
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: wb_root_password
+      MYSQL_DATABASE: wb_rdb
+      MYSQL_USER: wb_user
+      MYSQL_PASSWORD: wb_password
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:latest
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "6379:6379"
+
+  # wb_api_helloworld:
+  #   build:
+  #     context: ./wb_backend/wb_serverless/wb_api_helloworld
+  #   ports:
+  #     - '3000:3000'
+  #   command: npx serverless offline
+  #   volumes:
+  #     - ./wb_backend/wb_serverless/wb_api_helloworld:/app/wb_backend/wb_serverless/wb_api_helloworld
+
+  # frontend:
+  #   build:
+  #     context: ./wb_frontend
+  #   ports:
+  #     - '5173:5173'
+  #   command: npm run dev
+  #   volumes:
+  #     - ./wb_frontend:/app
+
+volumes:
+  mysql_data:

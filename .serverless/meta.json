@@ -1,0 +1,358 @@
+{
+  "/Users/stephhoang/web-builder/serverless.yml": {
+    "versionFramework": "4.6.2",
+    "servicePath": "/Users/stephhoang/web-builder/serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "kis-serverless",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "region": "us-east-1",
+        "stage": "dev",
+        "memorySize": 512,
+        "timeout": 10,
+        "environment": {
+          "STAGE": "${self:provider.stage}",
+          "JWT_SECRET": "<REDACTED>",
+          "REFRESH_SECRET": "<REDACTED>",
+          "REDIS_HOST": "${env:REDIS_HOST}",
+          "REDIS_PORT": "${env:REDIS_PORT}",
+          "DB_HOST": "${env:DB_HOST}",
+          "DB_USER": "${env:DB_USER}",
+          "DB_PASSWORD": "<REDACTED>",
+          "DB_NAME": "${env:DB_NAME}",
+          "DB_PORT": "${env:DB_PORT}"
+        }
+      },
+      "plugins": [
+        "serverless-offline"
+      ],
+      "custom": {
+        "serverless-offline": {
+          "httpPort": "${env:PORT}"
+        }
+      },
+      "functions": {
+        "register": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_register/src/handler.register",
+          "events": [
+            {
+              "http": {
+                "path": "register",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs18.x",
+      "region": "us-east-1",
+      "stage": "dev",
+      "memorySize": 512,
+      "timeout": 10,
+      "environment": {
+        "STAGE": "${self:provider.stage}",
+        "JWT_SECRET": "<REDACTED>",
+        "REFRESH_SECRET": "<REDACTED>",
+        "REDIS_HOST": "${env:REDIS_HOST}",
+        "REDIS_PORT": "${env:REDIS_PORT}",
+        "DB_HOST": "${env:DB_HOST}",
+        "DB_USER": "${env:DB_USER}",
+        "DB_PASSWORD": "<REDACTED>",
+        "DB_NAME": "${env:DB_NAME}",
+        "DB_PORT": "${env:DB_PORT}"
+      }
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "error": {
+      "message": "Cannot resolve '${env:JWT_SECRET}' variable at 'provider.environment.JWT_SECRET'. No value is available for this variable, and no default value was provided. Please check your variable definitions or provide a default value.",
+      "stack": "Error: Cannot resolve '${env:JWT_SECRET}' variable at 'provider.environment.JWT_SECRET'. No value is available for this variable, and no default value was provided. Please check your variable definitions or provide a default value.\n    at _ResolverManager.resolve (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/manager.js:801:11)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _ResolverManager.#handlePlaceholderNode (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/manager.js:702:9)\n    at <anonymous> (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/manager.js:578:11)\n    at processNodeAndHandleCompletion (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/graph.js:33:5)",
+      "code": "MISSING_VARIABLE_RESULT"
+    },
+    "serviceRawFile": "service: kis-serverless\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: us-east-1\n  stage: ${opt:stage}\n  memorySize: 512 # Optional\n  timeout: 10   # repository wide Lambda timeout\n  environment:  # repository wide Lambda env variables\n    STAGE: ${self:provider.stage}\n    #  JWT\n    JWT_SECRET: ${env:JWT_SECRET}\n    REFRESH_SECRET: ${env:REFRESH_SECRET}\n    # redis\n    REDIS_HOST: ${env:REDIS_HOST}\n    REDIS_PORT: ${env:REDIS_PORT}\n    # MySQL\n    DB_HOST: ${env:DB_HOST}\n    DB_USER: ${env:DB_USER}\n    DB_PASSWORD: ${env:DB_PASSWORD}\n    DB_NAME: ${env:DB_NAME}\n    DB_PORT: ${env:DB_PORT}\n    \nplugins:\n- serverless-offline # used for local execution\n\ncustom:\n  serverless-offline:\n    httpPort: ${env:PORT}\n\nfunctions:\n  # hello:\n  #   handler: apps/apis/api_hello/src/handler.hello\n  #   events:\n  #     - http:\n  #         path: hello\n  #         method: get\n  #         cors: true\n  #   environment:\n  #     ENV_VAR_1: ${env:ENV_VAR_1}\n\n  # login:\n  #   handler: apps/apis/api_login/src/handler.start\n  #   events:\n  #     - http:\n  #         path: login\n  #         method: post\n  #         cors: true\n  #     - http:\n  #         path: refresh\n  #         method: post\n  #         cors: true\n\n  register:\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_register/src/handler.register\n    events:\n      - http:\n          path: register\n          method: post\n          cors: true\n\n  # verify-token:\n  #   handler: apps/apis/api_verify-token/src/handler.run\n  #   events:\n  #     - http:\n  #         path: verify-token\n  #         method: post\n  #         cors: true\n\n  # logout:\n  #   handler: apps/apis/api_logout/src/handler.logout\n  #   events:\n  #     - http:\n  #         path: logout\n  #         method: post\n  #         cors: true\n\n  # get-users:\n  #   handler: apps/apis/api_get_users/src/handler.run\n  #   events:\n  #     - http:\n  #         path: get-users\n  #         method: get\n  #         cors: true",
+    "command": [
+      "offline"
+    ],
+    "options": {
+      "debug": "*",
+      "stage": "dev",
+      "reloadHandler": true
+    },
+    "orgId": "ee39a20e-8ffb-4591-9d50-476e2247999d",
+    "orgName": "stephhoang30",
+    "userId": "PZ6HPxSkfYYpcHpdY0",
+    "userName": "stephhoang30",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  },
+  "C:\\Users\\TranT\\Documents\\New folder\\serverless.yml": {
+    "versionFramework": "4.7.0",
+    "servicePath": "C:\\Users\\TranT\\Documents\\New folder\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "kis-serverless",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "region": "us-east-1",
+        "stage": "dev",
+        "memorySize": 512,
+        "timeout": 10,
+        "environment": {
+          "STAGE": "${self:provider.stage}",
+          "JWT_SECRET": "<REDACTED>",
+          "REFRESH_SECRET": "<REDACTED>",
+          "REDIS_HOST": "${env:REDIS_HOST}",
+          "REDIS_PORT": "${env:REDIS_PORT}",
+          "DB_HOST": "${env:DB_HOST}",
+          "DB_USER": "${env:DB_USER}",
+          "DB_PASSWORD": "<REDACTED>",
+          "DB_NAME": "${env:DB_NAME}",
+          "DB_PORT": "${env:DB_PORT}"
+        }
+      },
+      "plugins": [
+        "serverless-offline"
+      ],
+      "custom": {
+        "serverless-offline": {
+          "httpPort": "${env:PORT}"
+        }
+      },
+      "functions": {
+        "login": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_login/src/handler.start",
+          "events": [
+            {
+              "http": {
+                "path": "login",
+                "method": "post",
+                "cors": true
+              }
+            },
+            {
+              "http": {
+                "path": "refresh",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "register": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_register/src/handler.register",
+          "events": [
+            {
+              "http": {
+                "path": "register",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "verify-token": "<REDACTED>",
+        "logout": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_logout/src/handler.logout",
+          "events": [
+            {
+              "http": {
+                "path": "logout",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "create-new-project": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_create_new_project/src/handler.createProject",
+          "events": [
+            {
+              "http": {
+                "path": "create-new-project",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "get-projects": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_project_list/src/handler.projects",
+          "events": [
+            {
+              "http": {
+                "path": "projects",
+                "method": "get",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "get-project-detail": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_get_project_detail/src/handler.getProjectDetails",
+          "events": [
+            {
+              "http": {
+                "path": "project-detail/{projectId}",
+                "method": "get",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "update-project": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_update_project/src/handler.updateProject",
+          "events": [
+            {
+              "http": {
+                "path": "project-detail/{projectId}",
+                "method": "put",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "delete-project": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_delete_project/src/handler.deleteProject",
+          "events": [
+            {
+              "http": {
+                "path": "projects/{projectId}",
+                "method": "delete",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "duplicate-project": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_duplicate_project/src/handler.duplicateProject",
+          "events": [
+            {
+              "http": {
+                "path": "projects/{projectId}/duplicate",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "create-new-page": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_create_new_page/src/handler.createPage",
+          "events": [
+            {
+              "http": {
+                "path": "projects/{alias}/create-new-page",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "get-pages": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_get_pages/src/handler.getPages",
+          "events": [
+            {
+              "http": {
+                "path": "projects/{alias}",
+                "method": "get",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "update-page": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_update_page/src/handler.updatePage",
+          "events": [
+            {
+              "http": {
+                "path": "projects/{alias}/{urlAlias}/update",
+                "method": "put",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "delete-page": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_delete_page/src/handler.deletePage",
+          "events": [
+            {
+              "http": {
+                "path": "projects/{alias}/{urlAlias}",
+                "method": "delete",
+                "cors": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs18.x",
+      "region": "us-east-1",
+      "stage": "dev",
+      "memorySize": 512,
+      "timeout": 10,
+      "environment": {
+        "STAGE": "${self:provider.stage}",
+        "JWT_SECRET": "<REDACTED>",
+        "REFRESH_SECRET": "<REDACTED>",
+        "REDIS_HOST": "${env:REDIS_HOST}",
+        "REDIS_PORT": "${env:REDIS_PORT}",
+        "DB_HOST": "${env:DB_HOST}",
+        "DB_USER": "${env:DB_USER}",
+        "DB_PASSWORD": "<REDACTED>",
+        "DB_NAME": "${env:DB_NAME}",
+        "DB_PORT": "${env:DB_PORT}"
+      }
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "error": {
+      "message": "Cannot resolve '${env:JWT_SECRET}' variable at 'provider.environment.JWT_SECRET'. No value is available for this variable, and no default value was provided. Please check your variable definitions or provide a default value.",
+      "stack": "Error: Cannot resolve '${env:JWT_SECRET}' variable at 'provider.environment.JWT_SECRET'. No value is available for this variable, and no default value was provided. Please check your variable definitions or provide a default value.\n    at _ResolverManager.resolve (C:\\Users\\TranT\\.serverless\\releases\\4.7.0\\sf-core\\src\\lib\\resolvers\\manager.js:801:11)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _ResolverManager.#handlePlaceholderNode (C:\\Users\\TranT\\.serverless\\releases\\4.7.0\\sf-core\\src\\lib\\resolvers\\manager.js:702:9)\n    at <anonymous> (C:\\Users\\TranT\\.serverless\\releases\\4.7.0\\sf-core\\src\\lib\\resolvers\\manager.js:578:11)\n    at processNodeAndHandleCompletion (C:\\Users\\TranT\\.serverless\\releases\\4.7.0\\sf-core\\src\\lib\\resolvers\\graph.js:33:5)",
+      "code": "MISSING_VARIABLE_RESULT"
+    },
+    "serviceRawFile": "service: kis-serverless\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: us-east-1\r\n  stage: ${opt:stage}\r\n  memorySize: 512 # Optional\r\n  timeout: 10   # repository wide Lambda timeout\r\n  environment:  # repository wide Lambda env variables\r\n    STAGE: ${self:provider.stage}\r\n    #  JWT\r\n    JWT_SECRET: ${env:JWT_SECRET}\r\n    REFRESH_SECRET: ${env:REFRESH_SECRET}\r\n    # redis\r\n    REDIS_HOST: ${env:REDIS_HOST}\r\n    REDIS_PORT: ${env:REDIS_PORT}\r\n    # MySQL\r\n    DB_HOST: ${env:DB_HOST}\r\n    DB_USER: ${env:DB_USER}\r\n    DB_PASSWORD: ${env:DB_PASSWORD}\r\n    DB_NAME: ${env:DB_NAME}\r\n    DB_PORT: ${env:DB_PORT}\r\n    \r\nplugins:\r\n- serverless-offline # used for local execution\r\n\r\ncustom:\r\n  serverless-offline:\r\n    httpPort: ${env:PORT}\r\n\r\nfunctions:\r\n  # hello:\r\n  #   handler: apps/apis/api_hello/src/handler.hello\r\n  #   events:\r\n  #     - http:\r\n  #         path: hello\r\n  #         method: get\r\n  #         cors: true\r\n  #   environment:\r\n  #     ENV_VAR_1: ${env:ENV_VAR_1}\r\n\r\n  login:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_login/src/handler.start\r\n    events:\r\n      - http:\r\n          path: login\r\n          method: post\r\n          cors: true\r\n      - http:\r\n          path: refresh\r\n          method: post\r\n          cors: true\r\n\r\n  register:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_register/src/handler.register\r\n    events:\r\n      - http:\r\n          path: register\r\n          method: post\r\n          cors: true\r\n\r\n  verify-token:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_verify_token/src/handler.run\r\n    events:\r\n      - http:\r\n          path: verify-token\r\n          method: post\r\n          cors: true\r\n\r\n  logout:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_logout/src/handler.logout\r\n    events:\r\n      - http:\r\n          path: logout\r\n          method: post\r\n          cors: true\r\n\r\n  create-new-project:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_create_new_project/src/handler.createProject\r\n    events:\r\n      - http:\r\n          path: create-new-project\r\n          method: post\r\n          cors: true\r\n\r\n  # get-users:\r\n  #   handler: apps/apis/api_get_users/src/handler.run\r\n  #   events:\r\n  #     - http:\r\n  #         path: get-users\r\n  #         method: get\r\n  #         cors: true\r\n\r\n  get-projects:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_project_list/src/handler.projects\r\n    events:\r\n      - http:\r\n          path: projects\r\n          method: get\r\n          cors: true\r\n          \r\n  get-project-detail:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_get_project_detail/src/handler.getProjectDetails\r\n    events:\r\n      - http:\r\n          path: project-detail/{projectId}\r\n          method: get\r\n          cors: true\r\n\r\n  update-project:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_update_project/src/handler.updateProject\r\n    events:\r\n      - http:\r\n          path: project-detail/{projectId}\r\n          method: put\r\n          cors: true\r\n\r\n  delete-project:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_delete_project/src/handler.deleteProject\r\n    events:\r\n      - http:\r\n          path: projects/{projectId}\r\n          method: delete\r\n          cors: true\r\n\r\n  duplicate-project:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_duplicate_project/src/handler.duplicateProject\r\n    events:\r\n      - http:\r\n          path: projects/{projectId}/duplicate\r\n          method: post\r\n          cors: true\r\n  #C\r\n  create-new-page:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_create_new_page/src/handler.createPage\r\n    events:\r\n      - http:\r\n          path: projects/{alias}/create-new-page\r\n          method: post\r\n          cors: true \r\n  #R\r\n  get-pages:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_get_pages/src/handler.getPages\r\n    events:\r\n      - http:\r\n          path: projects/{alias}\r\n          method: get\r\n          cors: true\r\n  #U\r\n  update-page:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_update_page/src/handler.updatePage\r\n    events:\r\n      - http:\r\n          path: projects/{alias}/{urlAlias}/update\r\n          method: put\r\n          cors: true\r\n  #D\r\n  delete-page:\r\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_delete_page/src/handler.deletePage\r\n    events:\r\n      - http:\r\n          path: projects/{alias}/{urlAlias}\r\n          method: delete\r\n          cors: true \r\n\r\n#   move-project:\r\n#     handler: apps/web_builder/wb_backend/wb_serverless/wb_api_project_context_menu/src/handler.moveProject\r\n#     events:\r\n#       - http:\r\n#           path: move\r\n#           method: post\r\n#           cors: true\r\n\r\n#   publish-project:\r\n#     handler: apps/web_builder/wb_backend/wb_serverless/wb_api_project_context_menu/src/handler.publishProject\r\n#     events:\r\n#       - http:\r\n#           path: publish\r\n#           method: post\r\n#           cors: true",
+    "command": [
+      "offline"
+    ],
+    "options": {
+      "debug": "*",
+      "stage": "dev",
+      "reloadHandler": true
+    },
+    "orgId": "1811ff1f-9e06-4d08-b5bd-dbecfdb9eaf6",
+    "orgName": "kisvn",
+    "userId": "63y6nJXJFwYcjSBBfj",
+    "userName": "kisvn",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}
