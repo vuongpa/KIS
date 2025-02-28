@@ -1,14 +1,14 @@
-import { Editor, Frame, Element } from "@craftjs/core";
+import { Editor, Frame, Element } from '@craftjs/core';
 import {
   LeftSideBar,
   AddElementsHeader,
   RightSidebar,
   AddElementsComponent,
   DeviceMockup,
-} from "../../components/add_elements";
-import { componentMap } from "../../components/add_elements/components/layout_map";
-import { useState } from "react";
-import { LayerComponent } from "../../components/add_elements/components/layer";
+} from '../../components/add_elements';
+import { componentMap } from '../../components/add_elements/components/layout_map';
+import { useState } from 'react';
+import { LayerComponent } from '../../components/add_elements/components/layer';
 
 export const AddElementPage: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<string | null>(null);
@@ -19,9 +19,9 @@ export const AddElementPage: React.FC = () => {
 
   const renderSidebarContent = () => {
     switch (activeComponent) {
-      case "add":
+      case 'add':
         return <AddElementsComponent />;
-      case "layers":
+      case 'layers':
         return <LayerComponent />;
       default:
         return null;
@@ -31,18 +31,14 @@ export const AddElementPage: React.FC = () => {
   return (
     <Editor resolver={componentMap}>
       <div className="flex flex-col h-screen overflow-hidden">
-        <AddElementsHeader />  
+        <AddElementsHeader />
         <div className="flex flex-1 overflow-hidden">
           <LeftSideBar onComponentChange={handleComponentChange} />
-          {renderSidebarContent ()}
+          {renderSidebarContent()}
           <div className="flex flex-col flex-grow w-full overflow-y-auto">
             <div className="flex items-center justify-center w-full h-[calc(100vh-4rem)] bg-gray-100">
               <Frame>
-                <Element
-                  canvas
-                  is={DeviceMockup}
-                  
-                />
+                <Element canvas is={DeviceMockup} />
               </Frame>
             </div>
           </div>
