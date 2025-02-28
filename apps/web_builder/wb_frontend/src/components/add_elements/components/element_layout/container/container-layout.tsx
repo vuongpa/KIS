@@ -1,16 +1,12 @@
-import { useEditor, useNode } from "@craftjs/core";
-import React, { useState } from "react";
-import { DeleteContextMenu } from "../../../delete_context_menu/delete-context-menu";
-import { DefaultContainerProperties, getDefaultContainerProperties } from "./container-properties";
-import { ContainerProperties } from "./properties-container-panel";
-import { ResizeHandles } from "./resizes";
+import { useEditor, useNode } from '@craftjs/core';
+import React, { useState } from 'react';
+import { DeleteContextMenu } from '../../../delete_context_menu/delete-context-menu';
+import { DefaultContainerProperties, getDefaultContainerProperties } from './container-properties';
+import { ContainerProperties } from './properties-container-panel';
+import { Resizer } from '../resizer';
 
 export const ContainerLayout = (props: Partial<DefaultContainerProperties>) => {
-  const {
-    connectors: { connect, drag },
-    selected,
-    id,
-  } = useNode((node) => ({
+  const { selected, id } = useNode((node) => ({
     selected: node.events.selected,
     id: node.id,
   }));
@@ -18,73 +14,87 @@ export const ContainerLayout = (props: Partial<DefaultContainerProperties>) => {
   const { actions } = useEditor();
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
 
+  const {
+    justifyContent,
+    flexDirection,
+    alignItems,
+    fillSpace,
+    backgroundColor,
+    textColor,
+    paddingBottom,
+    paddingLeft,
+    paddingRight,
+    paddingTop,
+    marginBottom,
+    marginLeft,
+    marginRight,
+    marginTop,
+    boxShadow,
+    borderRadius,
+    display = 'flex',
+    gap,
+    position = 'relative',
+    top,
+    left,
+    right,
+    bottom,
+    zIndex,
+    overflow,
+    opacity,
+    children,
+  } = props;
+
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     actions.selectNode(id);
-    console.log("Node clicked and selected:", id);
+    console.log('Node clicked and selected:', id);
   };
+
   const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
     setContextMenu({ x: event.pageX, y: event.pageY });
   };
+
   const handleCloseContextMenu = () => {
     setContextMenu(null);
   };
 
   return (
-    <div
-      ref={(ref) => {
-        if (ref) {
-          connect(drag(ref));
-        }
-      }}
-      onClick={handleClick}
+    <Resizer
       onContextMenu={handleContextMenu}
-      className="relative"
+      onClick={handleClick}
+      propKey={{ width: 'width', height: 'height' }}
       style={{
-        width: props.width,
-        height: props.height,
-        maxWidth: props.maxWidth,
-        maxHeight: props.maxHeight,
-        minWidth: props.minWidth,
-        minHeight: props.minHeight,
-        backgroundColor: props.backgroundColor,
-        color: props.textColor,
-        border: `${props.borderWidth} ${props.borderStyle || "solid"} ${props.borderColor}`,
-        borderRadius: props.borderRadius,
-        padding: `${props.paddingTop} ${props.paddingRight} ${props.paddingBottom} ${props.paddingLeft}`,
-        margin: `${props.marginTop} ${props.marginRight} ${props.marginBottom} ${props.marginLeft}`,
-        display: props.display || "flex",
-        flexDirection: props.flexDirection,
-        alignItems: props.alignItems,
-        justifyContent: props.justifyContent,
-        gap: props.gap,
-        boxShadow: props.boxShadow,
-        position: props.position || "relative",
-        top: props.top,
-        left: props.left,
-        right: props.right,
-        bottom: props.bottom,
-        zIndex: props.zIndex,
-        overflow: props.overflow,
-        opacity: props.opacity,
-        outline: selected ? "2px solid gray" : "none",
-      }}
-    >
-      {props.children}
-      <ResizeHandles nodeId={id} />
-      <DeleteContextMenu
-        nodeId={id}
-        onClose={handleCloseContextMenu}
-        position={contextMenu}
-        onDelete={() => {}}
-      />
-    </div>
+        display,
+        gap,
+        position,
+        top,
+        left,
+        right,
+        bottom,
+        zIndex,
+        overflow,
+        opacity,
+        outline: selected ? '2px solid gray' : 'none',
+        justifyContent,
+        flexDirection,
+        alignItems,
+        background: backgroundColor,
+        color: textColor,
+        padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
+        margin: `${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px`,
+        boxShadow,
+        borderRadius,
+        flex: fillSpace === 'yes' ? 1 : 'unset',
+      }}>
+      {children}
+      <DeleteContextMenu nodeId={id} onClose={handleCloseContextMenu} position={contextMenu} onDelete={() => {}} />
+    </Resizer>
   );
 };
 
 ContainerLayout.craft = {
-  displayName: "ContainerLayout",
+  displayName: 'ContainerLayout',
   props: getDefaultContainerProperties(),
   rules: {
     canDrop: () => true,
